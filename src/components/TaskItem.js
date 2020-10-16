@@ -12,7 +12,7 @@ class TaskItem extends Component{
         return (
             <div style={{padding:15}}>
                 <Checkbox checked={false}/>
-                <Typography variant="h6" display="inline">Item</Typography>
+                <Typography variant="h6" display="inline" style={{verticalAlign:'middle', lineHeight:'inherit'}}>Item</Typography>
             </div>)
     }
 }
