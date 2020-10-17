@@ -18,6 +18,7 @@ class App extends Component{
     this.addTaskDialogClose = this.addTaskDialogClose.bind(this);
     this.populateTasksWithLatestTasks = this.populateTasksWithLatestTasks.bind(this);
     this.onTaskCheckedDone = this.onTaskCheckedDone.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   onAddTaskClick(){
@@ -31,10 +32,9 @@ class App extends Component{
 
   populateTasksWithLatestTasks(){
     let tasks = localStorage.getItem('tasks');
-    if(tasks == '')
+    if(tasks == '' || tasks == null)
       return;
-    this.setState({tasks:JSON.parse(tasks).reverse()});
-
+    this.setState({tasks:JSON.parse(tasks)});
   }
 
   onTaskCheckedDone(task){
@@ -42,6 +42,15 @@ class App extends Component{
     task.done = !task.done;
     let tasks = this.state.tasks;
     tasks[taskIndex] = task;
+    this.setState({tasks:tasks});
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }
+
+  deleteTask(task){
+    let tasks = this.state.tasks;
+    tasks.splice(tasks.indexOf(task), 1);
+    console.log(JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks))
     this.setState({tasks:tasks});
   }
 
@@ -73,12 +82,12 @@ class App extends Component{
             <div style={{flexGrow:1}}></div>
             <Button onClick={this.onAddTaskClick}>+</Button>
           </Paper>
-          {this.state.tasks.map((task, index)=>{
-            return <TaskItem task={task} taskDone={this.onTaskCheckedDone} key={index}/>
+          {this.state.tasks.reverse().map((task, index)=>{
+            return <TaskItem task={task} taskDone={this.onTaskCheckedDone} key={index} delete={this.deleteTask}/>
           })}
             
         </Card>
-        <AddEditTaskDialog open={this.state.showAddTaskDialog} close={this.addTaskDialogClose}/>
+        <AddEditTaskDialog open={this.state.showAddTaskDialog} close={this.addTaskDialogClose} />
       </Grid>
     );
   }

@@ -21,7 +21,7 @@ class AddEditTaskDialog extends Component{
 
     addTask(){
         let currentTasks = localStorage.getItem('tasks')
-        if(currentTasks == ""){
+        if(currentTasks == "" || currentTasks == null){
             localStorage.setItem('tasks', JSON.stringify([]));
             currentTasks = [];
         } else{
