@@ -13,9 +13,11 @@ import AddEditTaskDialog from './views/AddEditTaskDialog.js';
 class App extends Component{
   constructor(props){
     super(props);
-    this.state = {todoItems:[], showTaskDialog:false}
+    this.state = {tasks:[], showAddTaskDialog:false}
     this.onAddTaskClick = this.onAddTaskClick.bind(this);
     this.addTaskDialogClose = this.addTaskDialogClose.bind(this);
+    this.populateTasksWithLatestTasks = this.populateTasksWithLatestTasks.bind(this);
+    this.onTaskCheckedDone = this.onTaskCheckedDone.bind(this);
   }
 
   onAddTaskClick(){
@@ -23,7 +25,28 @@ class App extends Component{
   }
 
   addTaskDialogClose(){
+    this.populateTasksWithLatestTasks();
     this.setState({showAddTaskDialog:false});
+  }
+
+  populateTasksWithLatestTasks(){
+    let tasks = localStorage.getItem('tasks');
+    if(tasks == '')
+      return;
+    this.setState({tasks:JSON.parse(tasks).reverse()});
+
+  }
+
+  onTaskCheckedDone(task){
+    const taskIndex = this.state.tasks.indexOf(task);
+    task.done = !task.done;
+    let tasks = this.state.tasks;
+    tasks[taskIndex] = task;
+    this.setState({tasks:tasks});
+  }
+
+  componentDidMount(){
+    this.populateTasksWithLatestTasks();
   }
 
   render(){
@@ -50,7 +73,10 @@ class App extends Component{
             <div style={{flexGrow:1}}></div>
             <Button onClick={this.onAddTaskClick}>+</Button>
           </Paper>
-            <TaskItem/>
+          {this.state.tasks.map((task, index)=>{
+            return <TaskItem task={task} taskDone={this.onTaskCheckedDone} key={index}/>
+          })}
+            
         </Card>
         <AddEditTaskDialog open={this.state.showAddTaskDialog} close={this.addTaskDialogClose}/>
       </Grid>

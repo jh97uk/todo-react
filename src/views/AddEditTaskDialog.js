@@ -20,14 +20,17 @@ class AddEditTaskDialog extends Component{
     }
 
     addTask(){
-        let currentTasks = localStorage.getItem('tasks');
-        if(currentTasks == ''){
-            localStorage.setItem('tasks', []);
+        let currentTasks = localStorage.getItem('tasks')
+        if(currentTasks == ""){
+            localStorage.setItem('tasks', JSON.stringify([]));
             currentTasks = [];
+        } else{
+            currentTasks = JSON.parse(currentTasks);
         }
-        console.log(typeof currentTasks);
-        localStorage.setItem('tasks', currentTasks.push({done:false, name:this.state.taskName}));
+        currentTasks.push({done:false, name:this.state.taskName})
+        localStorage.setItem('tasks', JSON.stringify(currentTasks));
         this.props.close();
+        this.setState({taskName:''});
     }
 
     render(){

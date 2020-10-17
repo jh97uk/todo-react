@@ -9,10 +9,11 @@ class TaskItem extends Component{
     }
 
     render(){
+
         return (
             <div style={{padding:15}}>
-                <Checkbox checked={false}/>
-                <Typography variant="h6" display="inline" style={{verticalAlign:'middle', lineHeight:'inherit'}}>Item</Typography>
+                <Checkbox checked={this.props.task.done} onChange={()=>this.props.taskDone(this.props.task)}/>
+                <Typography variant="h6" display="inline" style={{verticalAlign:'middle', lineHeight:'inherit'}}>{this.props.task.name}</Typography>
             </div>)
     }
 }
