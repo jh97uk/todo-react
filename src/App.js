@@ -3,12 +3,15 @@ import './App.css';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import TaskItem from './components/TaskItem.js';
 import AddEditTaskDialog from './views/AddEditTaskDialog.js';
+
+import Zoom from '@material-ui/core/Zoom';
 
 class App extends Component{
   constructor(props){
@@ -85,6 +88,11 @@ class App extends Component{
           {this.state.tasks.reverse().map((task, index)=>{
             return <TaskItem task={task} taskDone={this.onTaskCheckedDone} key={index} delete={this.deleteTask}/>
           })}
+
+          {this.state.tasks.length > 0 ? '' : 
+          <CardContent>
+            <Typography variant="h6" style={{textAlign:'center'}}>No tasks yet!</Typography>
+          </CardContent>}
             
         </Card>
         <AddEditTaskDialog open={this.state.showAddTaskDialog} close={this.addTaskDialogClose} />
