@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,7 +12,23 @@ import Typography from '@material-ui/core/Typography';
 import TaskItem from './components/TaskItem.js';
 import AddEditTaskDialog from './views/AddEditTaskDialog.js';
 
-import Zoom from '@material-ui/core/Zoom';
+
+const style = theme => ({
+  root:{
+    [theme.breakpoints.down('sm')]: {
+      height:'100%'
+    }
+  },
+  rootCard:{
+    marginTop:50,
+    textAlign:'left',
+    [theme.breakpoints.down('sm')]: {
+      marginTop:0,
+      borderRadius:0,
+      height:'100%'
+    }
+  }
+});
 
 class App extends Component{
   constructor(props){
@@ -62,17 +79,20 @@ class App extends Component{
   }
 
   render(){
+    const { classes } = this.props;
     return (
       <Grid
         container 
         className="App"
         direction='row'
-        justify='center'>
+        justify='center'
+        className={classes.root}>
         <Card 
           component={Grid}
           item
-          xs={7}
-          style={{marginTop:50, textAlign:'left'}}>
+          xs={12}
+          md={7}
+          className={this.props.classes.rootCard}>
           <Paper 
             style={{
               width:'100%', 
@@ -91,7 +111,7 @@ class App extends Component{
 
           {this.state.tasks.length > 0 ? '' : 
           <CardContent>
-            <Typography variant="h6" style={{textAlign:'center'}}>No tasks yet!</Typography>
+            <Typography variant="subtitle1" style={{textAlign:'center'}} color="textSecondary">No tasks yet!</Typography>
           </CardContent>}
             
         </Card>
@@ -101,4 +121,4 @@ class App extends Component{
   }
 }
 
-export default App;
+export default withStyles(style)(App);
