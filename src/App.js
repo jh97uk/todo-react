@@ -27,6 +27,15 @@ const style = theme => ({
       borderRadius:0,
       height:'100%'
     }
+  },
+  itemList:{
+    maxHeight:288, 
+    overflowY:'scroll',
+    marginTop:2,
+    [theme.breakpoints.down('sm')]:{
+      maxHeight:'unset',
+      minHeight:'100%'
+    }
   }
 });
 
@@ -105,9 +114,12 @@ class App extends Component{
             <div style={{flexGrow:1}}></div>
             <Button onClick={this.onAddTaskClick}>+</Button>
           </Paper>
-          {this.state.tasks.reverse().map((task, index)=>{
-            return <TaskItem task={task} taskDone={this.onTaskCheckedDone} key={index} delete={this.deleteTask}/>
-          })}
+          <div className={classes.itemList}>
+            {this.state.tasks.reverse().map((task, index)=>{
+              return <TaskItem task={task} taskDone={this.onTaskCheckedDone} key={index} delete={this.deleteTask}/>
+            })}
+          </div>
+          
 
           {this.state.tasks.length > 0 ? '' : 
           <CardContent>
