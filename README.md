@@ -15,6 +15,7 @@ This project, as mentioned earlier, is perfect for teaching beginners real world
 - [x] Taking advantage of slick material UI using the Material UI library
 - [x] How to create pop up dialogs with custom text boxes.
 - [x] How to use the Grid API within material UI for responsive design.
+- [x] The wonders of conditional rendering
 
 I'd typically expect students to be able to finish this project in 2-3 weeks. However, everyone is different and it's completely fine to get stuck. Everyone has their different strenghts and strifes, and I will work alongside you to support you through anything you get stuck on.
 
